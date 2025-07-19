@@ -3,12 +3,19 @@ This group of scripts collectively performs feature selection within groups of p
 
 **R Script Names:**  
 Cox Proportional Hazards Modeling - Composite Scores and Parameters.R
+
 Cross Validation of Selected Features - Binary Parameters.R
+
 Cross Validation of Selected Features - Continuous Parameters.R
+
 Effect Size - Composite Scores and Seno-Age Gaps.R
+
 Effect Size - Individual Predictors.R
+
 Elastic Net Feature Selection - Binary Parameters.R
+
 Elastic Net Feature Selection - Continuous Parameters.R
+
 
 **Overview:**  
 Elastic net is a form of penalized linear regression that performs feature selection by shrinking beta coefficients of predictor variables using a penalty term, 
