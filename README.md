@@ -2,19 +2,14 @@
 This group of scripts collectively performs feature selection within groups of predictor variables using penalized linear regression, and validates these feature groups using out-of-sample parameter prediction.
 
 **R Script Names:**  
-Cox Proportional Hazards Modeling - Composite Scores and Parameters.R
 
-Cross Validation of Selected Features - Binary Parameters.R
-
-Cross Validation of Selected Features - Continuous Parameters.R
-
-Effect Size - Composite Scores and Seno-Age Gaps.R
-
-Effect Size - Individual Predictors.R
-
-Elastic Net Feature Selection - Binary Parameters.R
-
-Elastic Net Feature Selection - Continuous Parameters.R
+Cox Proportional Hazards Modeling - Composite Scores and Parameters.R  
+Cross Validation of Selected Features - Binary Parameters.R  
+Cross Validation of Selected Features - Continuous Parameters.R  
+Effect Size - Composite Scores and Seno-Age Gaps.R  
+Effect Size - Individual Predictors.R  
+Elastic Net Feature Selection - Binary Parameters.R  
+Elastic Net Feature Selection - Continuous Parameters.R  
 
 
 **Overview:**  
