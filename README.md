@@ -35,16 +35,10 @@ One limitation of elastic net modeling using common R functions such as cv.glmne
 **Return Values:**  
 - Coef is a table showing the penalized effect size of each feature for each supplied trait.
 - Lambda is a table showing the supplied alpha and optimized lambda across many runs for each parameter of the trait_list.
-- Heatmap is a graphical representation of the penalized effect size of each feature for each supplied trait.
-
-<p align="center">
-  <img src="images/Example_heatmap2.JPG" alt="Example Image of Selected Features" width="500">
-</p>
-
 - IVSum is a bar graph respresenting the number of selected features for each supplied parameter. Example image shows 100 possible features and 2 covariates.
 
 <p align="center">
-  <img src="images/Example_ivsum.JPG" alt="Example Image of Selected Features" width="500">
+  <img src="images/Example_ivsum-snc.JPG" alt="Example Image of Selected Features" width="500">
 </p>
 
 
