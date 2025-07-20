@@ -1,10 +1,8 @@
 
 
 #function for feature selection using elastic net modeling for continuous parameters 
-en_repeat_fast <- function(clin_df, protein_list, cat_control, cont_control, trait_list, alpha, heatmap=FALSE,scale_iv=TRUE){
-  #default is no heatmap
-  p <- NA
-  
+en_repeat_fast <- function(clin_df, protein_list, cat_control, cont_control, trait_list, alpha,scale_iv=TRUE){
+
   #df to hold optimized alpha and lambda for each clinical trait
   alpha_lambda <- as.data.frame(matrix(NA, ncol=2, nrow=length(trait_list)))
   colnames(alpha_lambda) <- c("alpha","lambda")
@@ -100,29 +98,6 @@ en_repeat_fast <- function(clin_df, protein_list, cat_control, cont_control, tra
   }
   coef_glmnet <- as.data.frame(coef_glmnet)
   
-  if(heatmap == TRUE){
-    #heatmap plot for all glmnet coefficients
-    p <- heatmaply(coef_glmnet,
-                   dendrogram = "column",
-                   k_col = 4,
-                   distfun = "spearman",
-                   xlab = "", ylab = "",
-                   main = "",
-                   margins = c(60,100,40,20),
-                   grid_color = "white",
-                   grid_width = 0.00001,
-                   titleX = FALSE,
-                   hide_colorbar = FALSE,
-                   branches_lwd = 0.1,
-                   label_names = c("Clinical Trait", "Protein", "BTrait"),
-                   fontsize_row = 16, fontsize_col = 12,
-                   labCol = colnames(coef_glmnet),
-                   labRow = rownames(coef_glmnet),
-                   title = "Protein Beta by Clincal Trait",
-                   heatmap_layers = theme(axis.line=element_blank())
-    )
-  }
-  
   #count IV proteins per trait
   #table to hold IV sums per clinical trait
   IV_sums <- as.data.frame(matrix(NA,nrow=length(trait_list),ncol=1))
@@ -146,6 +121,6 @@ en_repeat_fast <- function(clin_df, protein_list, cat_control, cont_control, tra
   #order optimized lambdas
   alpha_lambda <- alpha_lambda[rev(order(alpha_lambda$lambda)),]
   #return beta coefficients, optimized lambda values, heatmap of coef, bar graph of IV sums
-  list <- list("coef" = coef_glmnet, "lambda" = alpha_lambda, "heatmap" = p, "ivsum" = plot_ivsum)
+  list <- list("coef" = coef_glmnet, "lambda" = alpha_lambda, "ivsum" = plot_ivsum)
   return(list)
 }
