@@ -1,10 +1,8 @@
 
 
 #Function that performs elastic net modeling of supplied features to determine those implicated in a given parameter
-en_binomial_fast <- function(clin_df, protein_list, cat_control, cont_control, trait_list, alpha, heatmap=FALSE){
-  #default is no heatmap
-  p <- NA
-  
+en_binomial_fast <- function(clin_df, protein_list, cat_control, cont_control, trait_list, alpha){
+
   if(!NA %in% cont_control & !NA %in% cat_control){
     #Build matrix to hold coefficients using optimized model with best alpha and lambda for each clinical trait
     coef_glmnet <- as.data.frame(matrix(NA,nrow = length(trait_list), ncol = length(c(cat_control,cont_control,protein_list))))
@@ -84,30 +82,6 @@ en_binomial_fast <- function(clin_df, protein_list, cat_control, cont_control, t
   }
   coef_glmnet <- as.data.frame(coef_glmnet)
   
-  if(heatmap == TRUE){
-    #heatmap plot for all glmnet coefficients
-    p <- heatmaply(coef_glmnet,
-                   dendrogram = "column",
-                   k_col = 4,
-                   distfun = "spearman",
-                   xlab = "", ylab = "",
-                   main = "",
-                   #scale = "column",
-                   margins = c(60,100,40,20),
-                   grid_color = "white",
-                   grid_width = 0.00001,
-                   titleX = FALSE,
-                   hide_colorbar = FALSE,
-                   branches_lwd = 0.1,
-                   label_names = c("Clinical Trait", "Protein", "BTrait"),
-                   fontsize_row = 16, fontsize_col = 12,
-                   labCol = colnames(coef_glmnet),
-                   labRow = rownames(coef_glmnet),
-                   title = "Protein Beta by Clincal Trait",
-                   heatmap_layers = theme(axis.line=element_blank())
-    )
-  }
-  
   #count IV proteins per trait
   #table to hold IV sums per clinical trait
   IV_sums <- as.data.frame(matrix(NA,nrow=length(trait_list),ncol=1))
@@ -129,6 +103,6 @@ en_binomial_fast <- function(clin_df, protein_list, cat_control, cont_control, t
     geom_hline(yintercept=length(c(protein_list,control_list)), color = "red", linetype = "dashed", linewidth= 0.75)
   
   #return beta coefficients, optimized lambda values, heatmap of coef, bar graph of IV sums
-  list <- list("coef" = coef_glmnet, "heatmap" = p, "ivsum" = plot_ivsum)
+  list <- list("coef" = coef_glmnet, "ivsum" = plot_ivsum)
   return(list)
 }
