@@ -100,7 +100,7 @@ One limitation of elastic net modeling using common R functions such as cv.glmne
 
 Result dataframes are configured for easy plotting to compare predictive ability of models trained using each list of features.  
 <p align="center">
-  <img src="images/cvrsquared.JPG" alt="Example Image of Selected Features" width="500">
+  <img src="images/cvrsquared-snc.JPG" alt="Example Image of Selected Features" width="500">
 </p>
 
 
