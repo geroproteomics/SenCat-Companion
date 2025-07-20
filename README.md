@@ -42,7 +42,7 @@ This script performs reproducible elastic net modeling using the cv.glmnet packa
 - IVSum is a bar graph respresenting the number of selected features for each supplied parameter. Example image shows 100 possible features and 2 covariates.
 
 <p align="center">
-  <img src="images/Example_ivsum-snc.JPG" alt="Example Image of Selected Features" width="500">
+  <img src="images/Example_ivsum-snc.JPG" alt="Example Image of Sums of Selected Features for Each Parameter" width="500">
 </p>
 
 
@@ -101,7 +101,7 @@ This script uses selected features from elastic net modeling and reproducibly de
 
 Result dataframes are configured for easy plotting to compare predictive ability of models trained using each list of features.  
 <p align="center">
-  <img src="images/cvrsquared-snc.JPG" alt="Example Image of Selected Features" width="500">
+  <img src="images/cvrsquared-snc.JPG" alt="Example Image of Predictive Accuracy of Selected Features" width="500">
 </p>
 
 ## Effect Size - Composite Scores and Seno-Age Gaps.R  
@@ -146,7 +146,9 @@ This script condenses supplied groups of features into mean composite scores, or
 | Cell Type 2   | 0.01        | 0.21          | 0.09           |
 | Cell Type 3   | 0.009       | 0.11          | 0.80           |
 
-
+<p align="center">
+  <img src="images/Example_heatmap2_SNC.JPG" alt="Example Image of Heatmap with Predictor/Parameter Effect Sizes" width="500">
+</p>
 
 ## Dependencies:  
 glmnet  
