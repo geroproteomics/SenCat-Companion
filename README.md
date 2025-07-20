@@ -23,14 +23,9 @@ One downside of elastic net modeling using common R functions such as cv.glmnet 
 and increases the robustness of results by repeating elastic net modeling in R using the glmnet package a user-specified number of times, averages the output, and produces a lambda value and set 
 of selected features that produce the lowest MSE across many trials. This function also auto-scales features, uses parallel processing for faster output, and automates useful visualizations of the selected features.
 
-
-## Usage  
-
 ---
 
-Function: Elastic Net Feature Selection - Continuous Parameters.R  
-
-EN_Repeat_Results <- EN_Repeat(clin_df, protein_list, control_list, trait_list, alpha, iterations, heatmap=FALSE)
+### Function: Elastic Net Feature Selection - Continuous Parameters.R  
 
 **Arguments**  
 | Parameter       | Type        | Description                                                                                             |
