@@ -12,11 +12,7 @@ Cross Validation of Selected Features - Binary Parameters.R
 Cox Proportional Hazards Modeling - Composite Scores and Parameters.R  
 
 ## Overview  
-Elastic net is a form of penalized linear regression that performs feature selection by shrinking beta coefficients of predictor variables using a penalty term, 
-the stength of which is determined using a hyperperamater lambda, with a smaller lambda selecting more predictor terms, and larger selecting fewer. A range of values are used for lambda for cross validation, and ultimately the model using the lambda value and selected features that produces the lowest mean squared error (MSE) are found. In this way, Elastic Net can be used to identify important features, for example gene expression levels, implicated in clinical parameters (age, bmi, etc.).
-
-One limitation of elastic net modeling using common R functions such as cv.glmnet is the variability of the output, as folds for cross validation are selected randomly. This function ensures reproducibility during elastic net modeling by setting explicit fold IDs, then uses the selected features within a simple linear model and performs cross validation reprodicibly using the caret package. Additional features include auto-scaling of features, parallel processing for faster output, and producing a table indicating out-of-sample predictive ability of each set of features and for each parameter, as well as a list of selected features per parameter.
-
+Elastic net is a form of penalized linear regression that performs feature selection by shrinking beta coefficients of predictor variables using a penalty term, the stength of which is determined using a hyperperamater lambda, with a smaller lambda selecting more predictor terms, and larger selecting fewer. A range of values are used for lambda for cross validation, and ultimately the model using the lambda value and selected features that produces the lowest mean squared error (MSE) are found. In this way, Elastic Net can be used to identify important features, for example gene expression levels, implicated in clinical parameters (age, bmi, etc.). One limitation of elastic net modeling using common R functions such as cv.glmnet is the variability of the output, as folds for cross validation are selected randomly. These scripts ensure reproducibility during elastic net modeling by setting explicit fold IDs. Next, the selected features are modeled within a simple linear or logistic regression model to perform cross-validation (90% train, 10% test) reprodicibly using the caret package. Additional features include auto-scaling of features and parallel processing for faster output. Last, these scripts produce a table indicating out-of-sample predictive ability of each set of features and for each parameter, a list of selected features per parameter, as well as strict effect sizes. 
 
 
 ## Function: Elastic Net Feature Selection - Continuous Parameters.R  
@@ -25,7 +21,7 @@ One limitation of elastic net modeling using common R functions such as cv.glmne
 This script performs reproducible elastic net modeling using the cv.glmnet package. Features are selected for a number of supplied traits while controlling for supplied covariates. 
 
 **Arguments**  
-| Parameter       | Type        | Description                                                                                             |
+| Parameter       | Type        | Description                                                                                            |
 |----------------|-------------|---------------------------------------------------------------------------------------------------------|
 | `clin_df `     | `dataframe` | Table of microarray data containing gene expression values and covariates by columns, sample IDs by row |
 | `protein_list` | `vector `   | Vector of genes from which to perform feature selection                                                 |
@@ -39,19 +35,17 @@ This script performs reproducible elastic net modeling using the cv.glmnet packa
 **Return Values:**  
 - Coef is a table showing the penalized effect size of each feature for each supplied trait.
 - Lambda is a table showing the supplied alpha and optimized lambda across many runs for each parameter of the trait_list.
-- IVSum is a bar graph respresenting the number of selected features for each supplied parameter. Example image shows 100 possible features and 2 covariates.
+- IVSum is a bar graph respresenting the number of selected features for each supplied parameter. The example image shows 100 possible features and 2 covariates.
 
 <p align="center">
-  <img src="images/Example_ivsum-snc.JPG" alt="Example Image of Sums of Selected Features for Each Parameter" width="500">
+  <img src="images/Example_ivsum_SNC.JPG" alt="Example Image of Sums of Selected Features for Each Parameter" width="500">
 </p>
-
-
 
 
 ## Function: Cross Validation of Selected Features - Continuous Parameters.R   
 
 **Purpose**
-This script uses selected features from elastic net modeling and reproducibly determines their cross-validated predictive potential for a given set of parameters.
+This script uses selected features from elastic net modeling and reproducibly determines their cross-validated predictive potential for a given set of parameters using the caret package.
 
 **Arguments**  
 | Parameter       | Type        | Description                                                                                                    |
@@ -123,14 +117,14 @@ This script condenses supplied groups of features into mean composite scores, or
 
 
 **Return Values**    
-- effectsize_master is a table containing the effect size, p-value, and standard error of the composite scores or seno-age gaps and the supplied parameters. 
+- effectsize_master is a table containing the effect size, p-value, and standard error of the composite scores or seno-age gaps and the supplied parameters in the long format. 
 
 | Cell Type       | Trait       | Effect Size        | Low   | High   | P-Val   | FDR   |
 |-----------------|-------------|--------------------|-------|--------|---------|-------|
 | Cell Type 1     | Trait 1     | 0.45               |  0.42 | 0.67   |0.001    | 0.003 |
 | Cell Type 2     | Trait 1     | 0.23               |  0.05 | 0.30   |0.045    | 0.052 |
 
-- heat is a table containing the effect size of the composite scores or seno-age gaps and the supplied parameters in wide format, suitable for a heatmap
+- heat is a table containing the effect size of the composite scores or seno-age gaps and the supplied parameters in wide format, suitable for a heatmap.
 
 |               | Trait 1     | Trait 2       | Trait 3        |
 |---------------|-------------|---------------|----------------|
@@ -138,7 +132,7 @@ This script condenses supplied groups of features into mean composite scores, or
 | Cell Type 2   | 0.42        | 0.23          | 0.63           |
 | Cell Type 3   | 0.21        | 0.67          | 0.10           |
 
-- heat_p is a table containing the adjusted p-value of the composite scores or seno-age gaps and the supplied parameters in wide format, suitable for a heatmap
+- heat_p is a table containing the adjusted p-value of the composite scores or seno-age gaps and the supplied parameters in wide format, suitable for a heatmap.
 
 |               | Trait 1     | Trait 2       | Trait 3        |
 |---------------|-------------|---------------|----------------|
@@ -146,9 +140,11 @@ This script condenses supplied groups of features into mean composite scores, or
 | Cell Type 2   | 0.01        | 0.21          | 0.09           |
 | Cell Type 3   | 0.009       | 0.11          | 0.80           |
 
+- heat_graph is a heatmap created using geom_tile within ggplot2 showing the effect size for each predictor/parameter pair.
 <p align="center">
   <img src="images/Example_heatmap2_SNC.JPG" alt="Example Image of Heatmap with Predictor/Parameter Effect Sizes" width="500">
 </p>
+
 
 ## Dependencies:  
 glmnet  
