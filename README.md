@@ -21,15 +21,19 @@ One limitation of elastic net modeling using common R functions such as cv.glmne
 
 ## Function: Elastic Net Feature Selection - Continuous Parameters.R  
 
+**Purpose**
+This script performs reproducible elastic net modeling using the cv.glmnet package. Features are selected for a number of supplied traits while controlling for supplied covariates. 
+
 **Arguments**  
 | Parameter       | Type        | Description                                                                                             |
 |----------------|-------------|---------------------------------------------------------------------------------------------------------|
 | `clin_df `     | `dataframe` | Table of microarray data containing gene expression values and covariates by columns, sample IDs by row |
-| `protein_list` | `vector `   | Vector of genes from which to perform feature selection, and any continuous covariates                  |
-| `control_list` | `vector `   | Vector of categorical covariates                                                                        |
+| `protein_list` | `vector `   | Vector of genes from which to perform feature selection                                                 |
+| `cat_control`  | `vector `   | Vector of categorical covariates                                                                        |
+| `cont_control` | `vector `   | Vector of continuous covariates                                                                         |
 | `trait_list`   | `vector `   | Vector of continuous traits for which to select implicated features                                     |
 | `alpha`        | `numeric `  | Number indicating hyperparameter alpha (0 for ridge, 1 for lasso, in-between for Elastic Net)           |
-| `interations`  | `numeric `  | Number indicating the number of times the analysis will be run                                          |
+| `scale_iv`     | `boolean `  | Boolean to determine if the independent variables are to be scaled                                      |
 
 
 **Return Values:**  
@@ -45,6 +49,9 @@ One limitation of elastic net modeling using common R functions such as cv.glmne
 
 
 ## Function: Cross Validation of Selected Features - Continuous Parameters.R   
+
+**Purpose**
+This script uses selected features from elastic net modeling and reproducibly determines their cross-validated predictive potential for a given set of parameters.
 
 **Arguments**  
 | Parameter       | Type        | Description                                                                                                    |
@@ -97,11 +104,54 @@ Result dataframes are configured for easy plotting to compare predictive ability
   <img src="images/cvrsquared-snc.JPG" alt="Example Image of Selected Features" width="500">
 </p>
 
+## Effect Size - Composite Scores and Seno-Age Gaps.R  
+
+**Purpose**
+This script condenses supplied groups of features into mean composite scores, or constructs seno-age gaps, and determines their association with a given parameter using either linear or logistic regression.
+
+**Arguments**  
+| Parameter       | Type        | Description                                                                                                    |
+|----------------|-------------|-----------------------------------------------------------------------------------------------------------------|
+| `ensp_list `   | `list `     | List of pre-selected features chosen via elastic net for each dependent parameter                               |
+| `clin_df`      | `dataframe `| Vector containing lists of genes from which to perform feature selection                                        |
+| `trait_list`   | `vector `   | Vector of parameters for which to select features                                                               |
+| `cat_control`  | `vector `   | Vector of categorical covariates                                                                                |
+| `cont_control` | `vector `   | Vector of continuous covariates                                                                                 |
+| `type`         | `string `   | String determining the type of regression, lm for linear, glm, for logistic                                     |
+| `composite`    | `boolean `  | Boolean indicating whether a composite score (TRUE) or seno-age gap (FALSE) is used                             |
+| `interaction`  | `boolean `  | Boolean value determining whether a direct effect size or an interaction term is calculated                     |
+
+
+**Return Values**    
+- effectsize_master is a table containing the effect size, p-value, and standard error of the composite scores or seno-age gaps and the supplied parameters. 
+
+| Cell Type       | Trait       | Effect Size        | Low   | High   | P-Val   | FDR   |
+|-----------------|-------------|--------------------|-------|--------|---------|-------|
+| Cell Type 1     | Trait 1     | 0.45               |  0.42 | 0.67   |0.001    | 0.003 |
+| Cell Type 2     | Trait 1     | 0.23               |  0.05 | 0.30   |0.045    | 0.052 |
+
+- heat is a table containing the effect size of the composite scores or seno-age gaps and the supplied parameters in wide format, suitable for a heatmap
+
+|               | Trait 1     | Trait 2       | Trait 3        |
+|---------------|-------------|---------------|----------------|
+| Cell Type 1   | 0.23        | 0.49          | 0.53           |
+| Cell Type 2   | 0.42        | 0.23          | 0.63           |
+| Cell Type 3   | 0.21        | 0.67          | 0.10           |
+
+- heat_p is a table containing the adjusted p-value of the composite scores or seno-age gaps and the supplied parameters in wide format, suitable for a heatmap
+
+|               | Trait 1     | Trait 2       | Trait 3        |
+|---------------|-------------|---------------|----------------|
+| Cell Type 1   | 0.10        | 0.05          | 0.001          |
+| Cell Type 2   | 0.01        | 0.21          | 0.09           |
+| Cell Type 3   | 0.009       | 0.11          | 0.80           |
+
+
 
 ## Dependencies:  
 glmnet  
 ggplot2   
-doParallel
+doParallel  
 caret
 
 
