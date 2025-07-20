@@ -3,13 +3,14 @@ This group of scripts collectively performs feature selection within groups of p
 
 **R Script Names:**  
 
-Cox Proportional Hazards Modeling - Composite Scores and Parameters.R  
-Cross Validation of Selected Features - Binary Parameters.R  
+Elastic Net Feature Selection - Continuous Parameters.R  
 Cross Validation of Selected Features - Continuous Parameters.R  
 Effect Size - Composite Scores and Seno-Age Gaps.R  
 Effect Size - Individual Predictors.R  
 Elastic Net Feature Selection - Binary Parameters.R  
-Elastic Net Feature Selection - Continuous Parameters.R  
+Cross Validation of Selected Features - Binary Parameters.R  
+Cox Proportional Hazards Modeling - Composite Scores and Parameters.R  
+
 
 
 **Overview:**  
@@ -23,7 +24,12 @@ and increases the robustness of results by repeating elastic net modeling in R u
 of selected features that produce the lowest MSE across many trials. This function also auto-scales features, uses parallel processing for faster output, and automates useful visualizations of the selected features.
 
 
-**Usage:**  
+## Usage  
+
+---
+
+Function: Elastic Net Feature Selection - Continuous Parameters.R  
+
 EN_Repeat_Results <- EN_Repeat(clin_df, protein_list, control_list, trait_list, alpha, iterations, heatmap=FALSE)
 
 **Arguments**  
@@ -35,7 +41,7 @@ EN_Repeat_Results <- EN_Repeat(clin_df, protein_list, control_list, trait_list, 
 | `trait_list`   | `vector `   | Vector of continuous traits for which to select implicated features                                     |
 | `alpha`        | `numeric `  | Number indicating hyperparameter alpha (0 for ridge, 1 for lasso, in-between for Elastic Net)           |
 | `interations`  | `numeric `  | Number indicating the number of times the analysis will be run                                          |
-| `heatmap`      | `boolean `  | Boolean value determining if a heatmap displaying effect size by feature and trait will be returned     |
+
 
 **Return Values:**  
 - Coef is a table showing the penalized effect size of each feature for each supplied trait.
@@ -52,6 +58,8 @@ EN_Repeat_Results <- EN_Repeat(clin_df, protein_list, control_list, trait_list, 
   <img src="images/Example_ivsum.JPG" alt="Example Image of Selected Features" width="500">
 </p>
 
+---
+
 **Dependencies:**  
 glmnet  
 ggplot2  
@@ -59,7 +67,7 @@ heatmaply
 doParallel
 
 **Notes**  
-This function will produce an error if the heatmap functionality is set to true and any of the parameters have 0 selected features. If this error occurs, set heatmap to false.
+
 
 **Author**  
 Bradley Olinger, PhD  
